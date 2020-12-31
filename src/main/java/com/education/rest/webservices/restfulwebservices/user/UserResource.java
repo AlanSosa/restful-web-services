@@ -1,11 +1,9 @@
 package com.education.rest.webservices.restfulwebservices.user;
 
-import com.sun.jndi.toolkit.url.Uri;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
 import java.util.List;
 
@@ -36,8 +34,7 @@ public class UserResource {
     public User retriveUser(@PathVariable int id){
         return service.findOne(id);
     }
-
-
+    
     /*
     Jackson automatically maps the json sent in the body to the User bean by validating the name of properties.
     If you send a property that is not declared in the User bean, jackson will simply ignore it.

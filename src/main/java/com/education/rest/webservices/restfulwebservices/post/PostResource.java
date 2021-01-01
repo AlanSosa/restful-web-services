@@ -3,7 +3,6 @@ package com.education.rest.webservices.restfulwebservices.post;
 import com.education.rest.webservices.restfulwebservices.exception.PostNotFoundException;
 import com.education.rest.webservices.restfulwebservices.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

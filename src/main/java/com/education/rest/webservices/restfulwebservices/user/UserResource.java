@@ -63,8 +63,6 @@ public class UserResource {
     @PostMapping("/users")
     public ResponseEntity<Object> createUser(@RequestBody User user){
         User savedUser = service.save(user);
-
-
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()//Returns the current URI '/users'
                 .path("/{id}") //Then we append the id which is taken from the next method.
                 .buildAndExpand(savedUser.getId()) //This one gets the ID from the User bean.
@@ -79,11 +77,9 @@ public class UserResource {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable int id){
         User deletedUser = service.deleteUser(id);
-
         if(deletedUser == null){
             throw new UserNotFoundException("User with Id : " + id + " doesn't exists");
         }
-
-        return new ResponseEntity("Succesfully deleted user " + id, HttpStatus.OK);
+        return new ResponseEntity("Succesfully deleted user " + id, HttpStatus.NO_CONTENT);
     }
 }

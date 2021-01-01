@@ -28,6 +28,10 @@ public class UserDaoService {
         users.add(new User(3, "Miauricio", new Date()));
     }
 
+    public List<User> getUsers(){
+        return users;
+    }
+
     public List<User> findAll(){
         return users;
     }
@@ -43,6 +47,17 @@ public class UserDaoService {
     public User findOne(int id){
         for(User user : users){
             if(user.getId() == id){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User deleteUser(int id){
+        for(int i = 0; i < users.size(); i ++){
+            if(users.get(i).getId() == id){
+                User user = users.get(i);
+                users.remove(i);
                 return user;
             }
         }

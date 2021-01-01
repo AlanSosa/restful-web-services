@@ -1,6 +1,8 @@
 package com.education.rest.webservices.restfulwebservices.user;
 
+import com.education.rest.webservices.restfulwebservices.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,9 +34,13 @@ public class UserResource {
     //Retrieve User(int id)
     @GetMapping("/users/{id}")
     public User retriveUser(@PathVariable int id){
-        return service.findOne(id);
+        User user = service.findOne(id);
+        if(user == null){
+            throw new UserNotFoundException("User with id = " + id + " doesn't exist");
+        }
+        return user;
     }
-    
+
     /*
     Jackson automatically maps the json sent in the body to the User bean by validating the name of properties.
     If you send a property that is not declared in the User bean, jackson will simply ignore it.
@@ -45,7 +51,7 @@ public class UserResource {
     "anotherColumn":"Something here"
     }
 
-    anotherColumn value will be ignored and jackson will map the bean like this:
+    'anotherColumn' value will be ignored and jackson will map the bean like this:
 
     id: null
     name: "Texting name 1"
@@ -68,5 +74,16 @@ public class UserResource {
         location → http://localhost:8080/users/5
          */
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable int id){
+        User deletedUser = service.deleteUser(id);
+
+        if(deletedUser == null){
+            throw new UserNotFoundException("User with Id : " + id + " doesn't exists");
+        }
+
+        return new ResponseEntity("Succesfully deleted user " + id, HttpStatus.OK);
     }
 }

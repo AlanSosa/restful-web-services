@@ -1,7 +1,9 @@
 package com.education.rest.webservices.restfulwebservices.exception;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,5 +62,23 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    /*
+    * This method overrides the handleMethodArgumentNotvalid() that spring automatically handles when trying to bing to an specific argument fails.
+    * Since our USER bean already haves javax.validation.constraints @Annotations, this method is called when those annotations are triggered,
+    * which means the conditions of the annotations are not valid.
+    *
+    * If we override the method we can throw our custom errors, since SpringBootApplication.class is doing the catching of errors.
+    * */
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        //getBindingResults() is getting all the details of the actual error.
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Validation failed.", ex.getBindingResult().toString());
+
+        //We're returning our own error code, with our message exception.
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }

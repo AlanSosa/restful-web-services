@@ -21,6 +21,8 @@ public class User {
     Check more javax.validation api for more information about all the validations done.
     most of them are Hibernate validators, so if you implement Hibernate stuff you will probably
     need to add this .jar to your dependency handler.
+
+    More information about this validation handling, check chapter 3 step 16th.
     * */
     @Past
     private Date birthDate;

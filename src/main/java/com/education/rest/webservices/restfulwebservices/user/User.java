@@ -1,11 +1,28 @@
 package com.education.rest.webservices.restfulwebservices.user;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class User {
 
     private Integer id;
+
+    /*This annotations help us trigger the Spring exception handling.
+    * When jackson maps the request to our Bean, Java.validation framework will catch an error
+    * with this annotations.
+    *
+    * This can be catch by our CustomResponseEntityException handler, since spring is handling everything.
+    * */
+    @Size(min = 2)
     private String name;
+
+    /*
+    Check more javax.validation api for more information about all the validations done.
+    most of them are Hibernate validators, so if you implement Hibernate stuff you will probably
+    need to add this .jar to your dependency handler.
+    * */
+    @Past
     private Date birthDate;
 
     public User(Integer id, String name, Date birthDate) {

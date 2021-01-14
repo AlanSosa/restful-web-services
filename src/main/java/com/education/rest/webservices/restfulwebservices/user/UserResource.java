@@ -46,6 +46,7 @@ public class UserResource {
             throw new UserNotFoundException("User with id = " + id + " doesn't exist");
         }
 
+        //This is part of HATEOAS
         //Create the type or resource to return
         EntityModel<User> resource = new EntityModel<User>(user);
         //Add the links we want to add in the response parameter "all-users".
@@ -53,6 +54,18 @@ public class UserResource {
         //This is how the parameter will appear in JSON response
         resource.add(linkTo.withRel("all-users"));
 
+        /*
+        * Example response:
+        * EntityModel>
+        <id>1</id>
+        <name>Adam</name>
+        <birthDate>2021-01-14T04:06:04.106+00:00</birthDate>
+        <links>
+        <rel>all-users</rel>
+        <href>http://localhost:8080/users</href> <-HATEOAS STUFF
+        </links>
+        </EntityModel>
+        * */
         return resource;
     }
 

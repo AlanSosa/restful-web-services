@@ -1,9 +1,13 @@
 package com.education.rest.webservices.restfulwebservices.user;
 
+//import io.swagger.annotations.ApiModel;
+//import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+//@ApiModel(description = "User details")
 public class User {
 
     private Integer id;
@@ -14,7 +18,8 @@ public class User {
     *
     * This can be catch by our CustomResponseEntityException handler, since spring is handling everything.
     * */
-    @Size(min = 2)
+    @Size(min = 2, message = "Name should have at least 2 charactes")
+    //@ApiModelProperty(notes = "Name should at least have 2 characters")
     private String name;
 
     /*
@@ -25,6 +30,7 @@ public class User {
     More information about this validation handling, check chapter 3 step 16th.
     * */
     @Past
+    //@ApiModelProperty(notes = "Birth day should be in the past")
     private Date birthDate;
 
     public User(Integer id, String name, Date birthDate) {

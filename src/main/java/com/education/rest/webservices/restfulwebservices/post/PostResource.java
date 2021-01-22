@@ -27,7 +27,7 @@ public class PostResource {
 
     @PostMapping("/users/{id}/posts")
     public ResponseEntity<Object> createUserPost(@PathVariable int id, @RequestBody Post post){
-        post.setUserId(id);
+        post.getUser().setId(id);
         Post savedPost = service.save(post);
 
         if(savedPost == null){

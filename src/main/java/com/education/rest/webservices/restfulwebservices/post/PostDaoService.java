@@ -16,16 +16,19 @@ public class PostDaoService {
     @Autowired
     UserDaoService userService;
 
+
+    /*
+    commented out this parts since we're doing relations using JPA in Post Model
     static{
         posts.add(new Post(1, 1,"Adam's Post", "I'm adam and this is my post"));
         posts.add(new Post(2, 2,"Alan's Post", "I'm alan and this is my post"));
         posts.add(new Post(3, 3,"Miauricio's Post", "I'm miauricio and this is my post"));
-    }
+    }*/
 
     public Post save(Post post){
         List<User> usersList = userService.getUsers();
         for(User user : usersList){
-            if( post.getUserId() == user.getId()){
+            if( post.getUser().getId() == user.getId()){
                 post.setId(++postCount);
                 posts.add(post);
                 System.out.println("Saved post : " + post.toString());
@@ -39,7 +42,7 @@ public class PostDaoService {
         List<Post> userPosts = new ArrayList<>();
 
         for(Post post : posts){
-            if(post.getUserId() == id ){
+            if(post.getUser().getId() == id ){
                 userPosts.add( post );
             }
         }
@@ -53,7 +56,7 @@ public class PostDaoService {
 
     public Post findPost(int userId, int postid){
         for(Post post : posts){
-            if(post.getUserId() == userId && post.getId()== postid){
+            if(post.getUser().getId() == userId && post.getId()== postid){
                 return post;
             }
         }

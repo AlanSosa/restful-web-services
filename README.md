@@ -9,3 +9,5 @@ This project implements:\
 -Reponse Internationalization\
 -Swagger Documentation\
 -Centralized Exception Management for Rest Resources\
+-Jpa\
+-H2\
